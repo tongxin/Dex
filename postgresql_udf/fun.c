@@ -143,8 +143,8 @@ spark_compute(PG_FUNCTION_ARGS) {
 	
 	for ( i = 0; i < nelemskey; i++) {
 		cJSON_AddStringToObject(params, 
-							TextDatumGetCString(elemskey[i]),
-							TextDatumGetCString(elemsval[i]));
+									TextDatumGetCString(elemskey[i]),
+									TextDatumGetCString(elemsval[i]));
 	}
 
 	out =(char*) cJSON_Print(root);  
@@ -161,3 +161,4 @@ spark_compute(PG_FUNCTION_ARGS) {
 	
 	PG_RETURN_VOID(); 
 }
+
