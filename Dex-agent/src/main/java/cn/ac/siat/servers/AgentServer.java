@@ -1,5 +1,7 @@
 package cn.ac.siat.servers;
 
+import cn.ac.siat.app.App;
+import cn.ac.siat.app.Configure;
 import cn.ac.siat.handlers.SocketHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +44,7 @@ public class AgentServer extends Thread {
                 if(socketChannel != null){
                     LOG.info("host {} submit a request!", socketChannel.getRemoteAddress());
                     SocketHandler handler = new SocketHandler(socketChannel);
-                    new Thread(handler).start();
+                    App.POOL.execute(handler);
                 }
             }
 

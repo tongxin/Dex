@@ -13,7 +13,13 @@ public class TestAgentServer {
         try {
             SocketChannel channel = SocketChannel.open();
             channel.connect(new InetSocketAddress("127.0.0.1", 8888));
-            String msg = "{\"task\":\"cn.ac.siat.pi\", \"args\":[1,2,3]}\t\n";
+            String msg = "{\"name\": \"Pi\", " +
+                    "\"spark_home\" : \"/Users/laiqingquan/spark-2.0.0-bin-hadoop2.7\", " +
+                    "\"main_class\": \"org.apache.spark.examples.SparkPi\"," +
+                    " \"master\" : \"local\", " +
+                    "\"deploy_mode\": \"client\", " +
+                    "\"app_resource\" : \"/Users/laiqingquan/spark-2.0.0-bin-hadoop2.7/examples/jars/spark-examples_2.11-2.0.0.jar\""+
+                    "} \t\n";
             ByteBuffer buffer = ByteBuffer.wrap(msg.getBytes());
             while(buffer.hasRemaining()) {
                 channel.write(buffer);
@@ -24,3 +30,5 @@ public class TestAgentServer {
         }
     }
 }
+
+
