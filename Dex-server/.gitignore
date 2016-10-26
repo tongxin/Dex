@@ -1,0 +1,10 @@
+.idea
+project/project/
+project/target/
+src/main/java/
+src/main/resources/
+src/main/scala/
+src/test/java/
+src/test/resources/
+src/test/scala/
+target/
