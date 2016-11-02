@@ -1,0 +1,12 @@
+测试过程：
+
+进入udf所在目录：
+make
+
+postgresql:
+psql 连接数据库
+create or replace function dex_connect() returns int4
+as 'fun.so directory','Dex_connect'
+language c strict; 
+
+执行select dex_connect(); 
