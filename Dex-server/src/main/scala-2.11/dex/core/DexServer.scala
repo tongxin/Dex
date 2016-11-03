@@ -63,7 +63,6 @@ object DexServer extends App {
         val buffer = ByteBuffer.wrap(msg.getBytes)
 
         channel.send(buffer, new InetSocketAddress(args(0), Integer.valueOf(args(1))))
-
         server.start()
     }
 }
