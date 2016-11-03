@@ -1,0 +1,10 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+dex-agent.iml
+logs.log
+target/classes/base.properties
+target/classes/cn/ac/siat/app/Configure.class
+target/classes/cn/ac/siat/runnable/
+target/classes/cn/ac/siat/utils/
+target/generated-sources/
+target/generated-test-sources/

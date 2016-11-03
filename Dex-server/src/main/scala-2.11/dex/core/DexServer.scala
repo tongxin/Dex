@@ -1,7 +1,9 @@
 package dex.core
 
 import java.io.{BufferedReader, PrintStream}
-import java.net.Socket
+import java.net.{InetSocketAddress, Socket}
+import java.nio.ByteBuffer
+import java.nio.channels.DatagramChannel
 
 import dex.base.SelectorServer
 import org.apache.spark.{SparkConf, SparkContext}
@@ -53,7 +55,14 @@ object DexServer extends App {
     override def main(args: Array[String]) {
         val conf = new SparkConf().setAppName("naive_bayes")
         val sc = new SparkContext(conf)
-        val server = new SelectorServer(9999)
+        val port = 20099
+        val server = new SelectorServer(port)
+
+        val channel = DatagramChannel.open
+        val msg = "{\"port\" : " + port + "}"
+        val buffer = ByteBuffer.wrap(msg.getBytes)
+
+        channel.send(buffer, new InetSocketAddress(args(0), Integer.valueOf(args(1))))
 
         server.start()
     }

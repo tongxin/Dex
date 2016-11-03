@@ -6,12 +6,12 @@ scalaVersion := "2.11.8"
 
 libraryDependencies ++= Seq(
     "org.apache.spark" % "spark-core_2.11" % "2.0.0" % "provided",
-    "org.apache.spark" % "spark-mllib_2.11" % "2.0.0",
+    "org.apache.spark" % "spark-mllib_2.11" % "2.0.0" % "provided",
     "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.0.4",
     "ch.qos.logback" % "logback-classic" % "1.1.2"
 )
 
-jarName in assembly := "myJob.jar"
+jarName in assembly := "DexServer.jar"
 
 assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = false)
 

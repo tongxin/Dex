@@ -14,15 +14,16 @@ import org.slf4j.LoggerFactory
 class SelectorServer(port: Int) {
     val LOG = Logger(LoggerFactory.getLogger("SelectorServer"))
 
+    val serviceChannel = ServerSocketChannel.open()
+    serviceChannel.socket.bind(new InetSocketAddress(port))
+    serviceChannel.configureBlocking(false)
+
     def start(): Unit = {
         val selector = Selector.open()
-        val serviceChannel = ServerSocketChannel.open()
+
         val charDecoder = Charset.forName("UTF-8").newDecoder()
 
-        serviceChannel.socket.bind(new InetSocketAddress(port))
-        serviceChannel.configureBlocking(false)
         serviceChannel.register(selector, SelectionKey.OP_ACCEPT)
-
         val buffer = ByteBuffer.allocate(1024)
         while (true) {
             if (selector.select() > 0) {
