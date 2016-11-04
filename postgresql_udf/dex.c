@@ -31,21 +31,53 @@ Dex_connMessageToJSON (connMsg* msg, string out) {
 	return 0; 
 }
 
+// parse the response of connection
+conn_addr
+Dex_parseConnReponse (string rep) {
+	conn_addr driverServer;
+	dexJson *recvJSON, *item ; 
+	int size = 0; 
+
+	recvJSON = dexJson_Parse(rep); 
+		
+	item = dexJson_GetObjectItem(recvJSON,"host");
+	ereport(INFO,(errmsg("%s",item-> valuestring)));
+	
+	msg_cpy(driverServer.ip , item->valuestring, strlen(item->valuestring)); 
+
+	item = dexJson_GetObjectItem(recvJSON,"port"); 
+	driverServer.port = item->valueint;
+
+	return driverServer;
+}
+
 // connect PG with spark
 int
-Init_DexConnection(conn_addr dexServer, connMsg* msg) {
-	char out[1024];
+Init_DexConnection(conn_addr* dexServer, connMsg* msg) {
+	char out[8192] = {0};
 
 	Dex_connMessageToJSON(msg, out); // convert message sructure to Json
 	
 	add_end_msg(out);  //add the end flag
 
-	string rep = (string) palloc(1024); 
+	//string rep = (string) palloc(1024); 
 
-	ereport(INFO, (errmsg("%s", out)));
+	char rep[8192]={0};
+	ereport(INFO, (errmsg("Init_DexConnection:\n%s", out)));
 
 	send_msg_tcp(dexServer, out, rep); // send request to server
 
+
+	conn_addr driverServer; 
+	driverServer= Dex_parseConnReponse (rep);
+
+	
+
+	ereport(INFO,(errmsg("%s",rep)));
+	
+	resetBackendInfo(driverServer.ip, driverServer.port);
+	ereport(INFO,(errmsg("%s",driverServer.ip)));
+	ereport(INFO,(errmsg("%d",driverServer.port)));
 	return 0;  
 }
 
@@ -80,7 +112,7 @@ Dex_DataSetJDBCOptiontoJson(OptionName name, dexDataSetJDBCOption options, strin
 
 
 int
-Dex_createDataSetbyJDBC(dexDataSetJDBCOption options, conn_addr dexServer) {
+Dex_createDataSetbyJDBC(dexDataSetJDBCOption options, conn_addr* dexServer) {
 	char out[2048]={0}; 
 	OptionName name = "newDataset"; 
 	Dex_DataSetJDBCOptiontoJson(name, options, out); 
@@ -124,7 +156,7 @@ Dex_DataSet_Join_toJson(dataset d1, dataset d2, dexDataSetjoinConditions conditi
 }
 
 int
-Dex_DataSet_Join(dataset d1, dataset d2, dexDataSetjoinConditions conditions, conn_addr dexServer) {
+Dex_DataSet_Join(dataset d1, dataset d2, dexDataSetjoinConditions conditions, conn_addr* dexServer) {
 	char out[2048]={0};  
 	
 	Dex_DataSet_Join_toJson(d1, d2, conditions, out);
@@ -145,7 +177,7 @@ Dex_DataSet_Union_toJson(dataset d1, dataset d2, string out) {
 }
 
 int
-Dex_DataSet_Union(dataset d1, dataset d2, conn_addr dexServer) {
+Dex_DataSet_Union(dataset d1, dataset d2, conn_addr* dexServer) {
 	char out[2048]={0};  
 	
 	Dex_DataSet_Union_toJson(d1, d2, out);
@@ -161,7 +193,7 @@ Dex_DataSet_Union(dataset d1, dataset d2, conn_addr dexServer) {
 }
 
 int
-close_DexConnection(conn_addr dexServer, connMsg* msg) {
+close_DexConnection(conn_addr* dexServer, connMsg* msg) {
 	char out[1024];
 
 	Dex_connMessageToJSON(msg, out); // convert message sructure to Json

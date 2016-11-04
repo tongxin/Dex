@@ -20,9 +20,21 @@ dexJson_addStringtoObject(dexJson* root, const char* name, const char* s) {
 	cJSON_AddStringToObject(root, name, s);
 }
 
-char* dexJson_Print (dexJson* root) {
+char* 
+dexJson_Print (dexJson* root) {
 	return cJSON_Print(root);
 }
+
+dexJson* 
+dexJson_GetObjectItem(cJSON *object,const char *string) {
+	return cJSON_GetObjectItem(object,string);
+}
+
+dexJson* 
+dexJson_Parse(const char *value){
+	return cJSON_Parse(value);
+}
+
 
 
 

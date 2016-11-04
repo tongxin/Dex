@@ -8,7 +8,7 @@ typedef const char* cstring;
 
 //
 typedef struct conn_Addr {
-	char *ip; 
+	char ip[512] ; 
 	int port; 
 } conn_addr; 
 

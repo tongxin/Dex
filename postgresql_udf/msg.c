@@ -13,7 +13,7 @@ add_end_msg(char* buf) {
 
 //CLIENT(C) send message
 int
-send_msg_tcp( conn_addr dexServer, char* buf, char* out) {
+send_msg_tcp( conn_addr* dexServer, char* buf, char* out) {
 	int s; 
 	struct sockaddr_in client,server;
 	char recv_buf[MAX_LEN];
@@ -26,8 +26,8 @@ send_msg_tcp( conn_addr dexServer, char* buf, char* out) {
 	//设置服务器地址结构
 	bzero(&server, sizeof(server)); 
 	server.sin_family = AF_INET; 
-	server.sin_port = htons(dexServer.port);
-	server.sin_addr.s_addr = inet_addr(dexServer.ip); 
+	server.sin_port = htons(dexServer->port);
+	server.sin_addr.s_addr = inet_addr(dexServer->ip); 
 	
 	//连接服务器
 	if (connect(s, (struct sockaddr *)&server, sizeof(server)) < 0 ) {
@@ -49,6 +49,8 @@ send_msg_tcp( conn_addr dexServer, char* buf, char* out) {
 		elog(ERROR, "read error!");
 		exit(1); 
 	}
+
+	msg_cpy(out, recv_buf, strlen(recv_buf));
 	
 	close(s);
 	return 0; 

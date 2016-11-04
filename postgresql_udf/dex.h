@@ -65,19 +65,19 @@ typedef Options dexDataSetjoinConditions;
 
 
 int
-Init_DexConnection(conn_addr dexServer, connMsg* msg);
+Init_DexConnection(conn_addr* dexServer, connMsg* msg);
 
 int
 Dex_connMessageToJSON (connMsg* msg, string out);
 
 int
-Dex_createDataSetbyJDBC(dexDataSetJDBCOption options, conn_addr dexServer);
+Dex_createDataSetbyJDBC(dexDataSetJDBCOption options, conn_addr* dexServer);
 
 int
-Dex_DataSet_Join(dataset d1, dataset d2, dexDataSetjoinConditions conditions, conn_addr dexServer);
+Dex_DataSet_Join(dataset d1, dataset d2, dexDataSetjoinConditions conditions, conn_addr* dexServer);
 
 int
-Dex_DataSet_Union(dataset d1, dataset d2, conn_addr dexServer);
+Dex_DataSet_Union(dataset d1, dataset d2, conn_addr* dexServer);
 
 
 #endif

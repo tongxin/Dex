@@ -30,7 +30,7 @@ msg_cpy (char* buf, char* str, int length);
 
 //send request to dexServer
 int
-send_msg_tcp( conn_addr dexServer, char* buf, char* out) ;
+send_msg_tcp( conn_addr* dexServer, char* buf, char* out) ;
 
 int
 recv_msg_udp(char* buf, int port);

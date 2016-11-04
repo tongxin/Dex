@@ -17,7 +17,7 @@
 #define HOSTIP "127.0.0.1"
 #define HOSTPORT 8080
 #define DexServerIP "127.0.0.1"
-#define DexServerPort 9999
+#define DexServerPort 8888
 
 #ifdef PG_MODULE_MAGIC
 PG_MODULE_MAGIC; 
@@ -31,19 +31,19 @@ Dex_connect(PG_FUNCTION_ARGS){
 	
 	//validate the number of the arguments and types of the arguments
 	if (PG_NARGS() == 0) {
-		conn_addr dexserver;
+		conn_addr* dexserver;
 		connMsg *msg; 
- 
-		dexserver.ip = DexServerIP; 
-		dexserver.port = DexServerPort; 
+ 		
+		msg_cpy(dexserver->ip, "127.0.0.1", strlen(DexServerIP));		
+		dexserver->port = DexServerPort; 
 
 		//to construct a message structure
-		msg->name = "StartUp"; 
-		msg->spark_home = ""; 
-		msg->main_class = ""; 
-		msg->master = ""; 
+		msg->name = "Pi"; 
+		msg->spark_home = "/home/cai/Downloads/spark-2.0.1-bin-hadoop2.4"; 
+		msg->main_class = "dex.core.DexServer"; 
+		msg->master = "local"; 
 		msg->deploy_mode = "client"; 
-		msg->app_resource = ""; 
+		msg->app_resource = "/home/cai/Documents/workplace/DexServer.jar"; 
 
 		Init_DexConnection(dexserver, msg); // init the connection with the Dex
 		

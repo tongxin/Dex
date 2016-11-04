@@ -18,6 +18,13 @@ dexJson_addItemtoObject(dexJson* root, const char* name, dexJson* item)  ;
 void
 dexJson_addStringtoObject(dexJson* root, const char* name, const char* s) ;
 
-char* dexJson_Print (dexJson* root) ;
+char* 
+dexJson_Print (dexJson* root) ;
+
+dexJson* 
+dexJson_GetObjectItem(cJSON *object,const char *string) ;
+
+dexJson* 
+dexJson_Parse(const char *value);
 
 #endif
