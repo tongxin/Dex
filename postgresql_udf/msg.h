@@ -19,20 +19,28 @@
 
 #include "globals.h"
 
-#define MAX_LEN 1024
- 
+#define MAX_LEN  1024
+
 
 //CLIENT(C) send message
 
 //copy string from str to buf
-void 
+void
 msg_cpy (char* buf, char* str, int length);
 
-//send request to dexServer
+//add the end flat for the request
+void
+add_end_msg(string buf) ;
+
+//send request to dexServer through tcp
 int
 send_msg_tcp( conn_addr* dexServer, char* buf, char* out) ;
 
+//recieve information from dexServer through udp
 int
 recv_msg_udp(char* buf, int port);
 
-#endif 
+
+
+
+#endif

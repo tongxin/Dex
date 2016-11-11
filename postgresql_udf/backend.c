@@ -2,15 +2,17 @@
 
 int
 resetBackendInfo(string host, int port) {
-	MyBackendDriverIP = host; 
-	MyBackendDriverPort = port;  
+	MyBackendDriverIP = host;
+	MyBackendDriverPort = port;
+	return 0;
 }
 
+string
 getBackendDriverIP() {
-	return MyBackendDriverIP; 
+	return MyBackendDriverIP;
 }
 
 int
 getBackendDriverPort() {
-	return MyBackendDriverPort; 
+	return MyBackendDriverPort;
 }
